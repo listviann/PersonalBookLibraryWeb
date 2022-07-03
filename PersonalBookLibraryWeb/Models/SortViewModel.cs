@@ -1,13 +1,14 @@
 ﻿namespace PersonalBookLibraryWeb.Models
 {
+    // view model for sorting
     public class SortViewModel
     {
-        public SortState BookNameSort { get; }
-        public SortState AuthorNameSort { get; }
-        public SortState RatingSort { get; }
-        public SortState ShortDescriptionSort { get; }
-        public SortState SectionSort { get; }
-        public SortState Current { get; }
+        public SortState BookNameSort { get; } // book name sorting value
+        public SortState AuthorNameSort { get; } // author name sorting value
+        public SortState RatingSort { get; } // book rating sorting value
+        public SortState ShortDescriptionSort { get; } // short decription sorting value
+        public SortState SectionSort { get; } // library section sorting value
+        public SortState Current { get; } // current sorting value
 
         public SortViewModel(SortState sortOrder)
         {

@@ -2,6 +2,7 @@
 
 namespace PersonalBookLibraryWeb.Models
 {
+    // book data model
     public class Book
     {
         public int Id { get; set; }

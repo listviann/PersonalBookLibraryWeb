@@ -2,6 +2,7 @@
 
 namespace PersonalBookLibraryWeb.Models
 {
+    // view model for filtering
     public class FilterViewModel
     {
         public string? SelectedName { get; }

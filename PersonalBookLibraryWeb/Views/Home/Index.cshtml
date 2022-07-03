@@ -12,6 +12,7 @@
 
 <h2>Library</h2>
 <p><a asp-action="Create">Add the book</a></p>
+@*filtering*@
 <form method="get">
     <label>Book name: </label>
     <input name="bookName" value="@Model.FilterViewModel.SelectedName" />
@@ -77,6 +78,7 @@
     }
 </table>
 <p>
+    @*pagination*@
     @if (Model.PageViewModel.HasPreviousPage)
     {
         <a asp-action="Index"

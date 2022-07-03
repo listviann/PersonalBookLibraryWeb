@@ -1,5 +1,6 @@
 ﻿namespace PersonalBookLibraryWeb.Models
 {
+    // general view model that combines PageViewModel, FilterViewModel, SortViewModel and the data
     public class IndexViewModel
     {
         public IEnumerable<Book> Books { get; }
