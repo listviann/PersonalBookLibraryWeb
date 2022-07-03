@@ -20,8 +20,6 @@ namespace PersonalBookLibraryWeb.Models
         [StringLength(150, ErrorMessage = "Maximum length of the field is 150 symbols")]
         public string? ShortDescription { get; set; }
 
-        public int LibSectionId { get; set; }
-
         [Required(ErrorMessage = "Field is required")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Maximum length of the field is 50 symbols and minimum length is 1")]
         public string? Section { get; set; }

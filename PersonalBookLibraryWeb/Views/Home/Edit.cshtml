@@ -1,0 +1,37 @@
+﻿@model PersonalBookLibraryWeb.Models.Book
+
+<h2>Editing a book</h2>
+<form asp-action="edit" asp-controller="home" asp-route-id="@Model.Id">
+    <p>
+        <label asp-for="BookName">Name of the book</label><br />
+        <input type="text" asp-for="BookName" />
+        <span asp-validation-for="BookName"></span>
+    </p>
+    <p>
+        <label asp-for="AuthorName">Name of author</label><br />
+        <input type="text" asp-for="AuthorName" />
+        <span asp-validation-for="AuthorName"></span>
+    </p>
+    <p>
+        <label asp-for="Rating">Rating</label><br />
+        <input type="number" asp-for="Rating" />
+        <span asp-validation-for="Rating"></span>
+    </p>
+    <p>
+        <label asp-for="ShortDescription">Short description (optionally)</label><br />
+        <input type="text" asp-for="ShortDescription" />
+        <span asp-validation-for="ShortDescription"></span>
+    </p>
+    <p>
+        <label asp-for="Section">Library section</label><br />
+        <input type="text" asp-for="Section" />
+        <span asp-validation-for="Section"></span>
+    </p>
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+</form>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
