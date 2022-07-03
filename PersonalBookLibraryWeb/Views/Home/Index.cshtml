@@ -6,6 +6,8 @@
     <tr><th>Book name</th><th>Author</th><th>Rating</th><th>Description</th><th>Section</th></tr>
     @foreach (var item in Model)
     {
+        if (string.IsNullOrEmpty(item.ShortDescription)) item.ShortDescription = "None";
+        
         <tr>
             <td>@item.BookName</td>
             <td>@item.AuthorName</td>

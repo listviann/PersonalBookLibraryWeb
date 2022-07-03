@@ -6,7 +6,7 @@ namespace PersonalBookLibraryWeb.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Field is required")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Maximum length of the field is 50 symbols and minimum length is 3")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Maximum length of the field is 50 symbols and minimum length is 3")]
         public string? BookName { get; set; }
 
         [Required(ErrorMessage = "Field is required")]
