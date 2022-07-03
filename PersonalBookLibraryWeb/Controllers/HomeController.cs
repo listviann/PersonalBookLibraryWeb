@@ -17,30 +17,67 @@ namespace PersonalBookLibraryWeb.Controllers
 
         // read
         [HttpGet]
-        public async Task<IActionResult> Index(SortState sortOrder = SortState.BookNameAsc)
+        public async Task<IActionResult> Index(string name, int page = 1, SortState sortOrder = SortState.BookNameAsc)
         {
+            int pageSize = 3;
+
             IQueryable<Book> books = db.Books;
-            ViewData["BookNameSort"] = sortOrder == SortState.BookNameAsc ? SortState.BookNameDesc : SortState.BookNameAsc;
-            ViewData["AuthorNameSort"] = sortOrder == SortState.AuthorNameAsc ? SortState.AuthorNameDesc : SortState.AuthorNameAsc;
-            ViewData["RatingSort"] = sortOrder == SortState.RatingAsc ? SortState.RatingDesc : SortState.RatingAsc;
-            ViewData["ShortDescriptionSort"] = sortOrder == SortState.ShortDescriptionAsc ? SortState.ShortDescriptionDesc : SortState.ShortDescriptionAsc;
-            ViewData["SectionSort"] = sortOrder == SortState.SectionAsc ? SortState.SectionDesc : SortState.SectionAsc;
 
-            books = sortOrder switch
+            // filtering
+            if (!string.IsNullOrEmpty(name))
             {
-                SortState.BookNameDesc => books.OrderByDescending(b => b.BookName),
-                SortState.AuthorNameAsc => books.OrderBy(b => b.AuthorName),
-                SortState.AuthorNameDesc => books.OrderByDescending(b => b.AuthorName),
-                SortState.RatingAsc => books.OrderBy(b => b.Rating),
-                SortState.RatingDesc => books.OrderByDescending(b => b.Rating),
-                SortState.ShortDescriptionAsc => books.OrderBy(b => b.ShortDescription),
-                SortState.ShortDescriptionDesc => books.OrderByDescending(b => b.ShortDescription),
-                SortState.SectionAsc => books.OrderBy(b => b.Section),
-                SortState.SectionDesc => books.OrderByDescending(b => b.Section),
-                _ => books.OrderBy(b => b.BookName),
-            };
+                books = books.Where(b => b.BookName!.Contains(name));
+            }
 
-            return View(await books.AsNoTracking().ToListAsync());
+            // sorting
+            switch (sortOrder)
+            {
+                case SortState.BookNameDesc:
+                    books = books.OrderByDescending(b => b.BookName);
+                    break;
+                case SortState.AuthorNameAsc:
+                    books = books.OrderBy(b => b.AuthorName);
+                    break;
+                case SortState.AuthorNameDesc:
+                    books = books.OrderByDescending(b => b.AuthorName);
+                    break;
+                case SortState.RatingAsc:
+                    books = books.OrderBy(b => b.Rating);
+                    break;
+                case SortState.RatingDesc:
+                    books = books.OrderByDescending(b => b.Rating);
+                    break;
+                case SortState.ShortDescriptionAsc:
+                    books = books.OrderBy(b => b.ShortDescription);
+                    break;
+                case SortState.ShortDescriptionDesc:
+                    books = books.OrderByDescending(b => b.ShortDescription);
+                    break;
+                case SortState.SectionAsc:
+                    books = books.OrderBy(b => b.Section);
+                    break;
+                case SortState.SectionDesc:
+                    books = books.OrderByDescending(b => b.Section);
+                    break;
+                default:
+                    books = books.OrderBy(b => b.BookName);
+                    break;
+            }
+
+            // pagination
+            var count = await books.CountAsync();
+            var items = await books.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            // view model building
+            IndexViewModel viewModel = new IndexViewModel(
+                items,
+                new PageViewModel(count, page, pageSize),
+                new FilterViewModel(name),
+                new SortViewModel(sortOrder)
+                );
+
+            //return View(await books.AsNoTracking().ToListAsync());
+            return View(viewModel);
         }
 
         // create

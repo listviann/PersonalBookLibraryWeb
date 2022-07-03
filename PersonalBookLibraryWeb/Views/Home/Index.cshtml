@@ -1,36 +1,61 @@
-﻿@model IEnumerable<PersonalBookLibraryWeb.Models.Book>
+﻿@*@model IEnumerable<PersonalBookLibraryWeb.Models.Book>
+*@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using PersonalBookLibraryWeb.Models
+@model IndexViewModel
+
+<style>
+    .glyphicon {display: inline-block; padding:0 5px;}
+    .glyphicon-chevron-right:after {content: "\00BB";}
+    .glyphicon-chevron-left:before {content: "\00AB";}
+</style>
 
 <h2>Library</h2>
 <p><a asp-action="Create">Add the book</a></p>
+<form method="get">
+    <label>Book name: </label>
+    <input name="bookName" value="@Model.FilterViewModel.SelectedName" />
+    <input type="submit" value="Filter" />
+</form>
 <table class="table">
     <tr>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewBag.BookNameSort">
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.BookNameSort)"
+            asp-route-name="@(Model.FilterViewModel.SelectedName)">
                 Book name
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewBag.AuthorNameSort">
+            <a asp-action="Index"
+            asp-route-sortOrder="@(Model.SortViewModel.AuthorNameSort)"
+            asp-route-name="@(Model.FilterViewModel.SelectedName)">
                 Author name
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewBag.RatingSort">
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.RatingSort)"
+            asp-route-name="@(Model.FilterViewModel.SelectedName)">
                 Rating
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewBag.ShortDescriptionSort">
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.ShortDescriptionSort)"
+            asp-route-name="@(Model.FilterViewModel.SelectedName)">
                 Description
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewBag.SectionSort">
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.SectionSort)"
+            asp-route-name="@(Model.FilterViewModel.SelectedName)">
                 Section
             </a>
         </th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Books)
     {
         if (string.IsNullOrEmpty(item.ShortDescription)) item.ShortDescription = "None";
 
@@ -51,3 +76,26 @@
         </tr>
     }
 </table>
+<p>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index"
+        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+        asp-route-name="@(Model.FilterViewModel.SelectedName)"
+        asp-route-sortorder="@(Model.SortViewModel.Current)"
+        class="glyphicon glyphicon-chevron-left">
+        Назад
+        </a>
+    }
+
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+        asp-route-name="@(Model.FilterViewModel.SelectedName)"
+        asp-route-sortorder="@(Model.SortViewModel.Current)"
+        class="glyphicon glyphicon-chevron-right">
+        Назад
+        </a>
+    }
+</p>
