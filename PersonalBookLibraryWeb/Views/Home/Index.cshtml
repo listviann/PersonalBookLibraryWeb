@@ -3,11 +3,37 @@
 <h2>Library</h2>
 <p><a asp-action="Create">Add the book</a></p>
 <table class="table">
-    <tr><th>Book name</th><th>Author</th><th>Rating</th><th>Description</th><th>Section</th></tr>
+    <tr>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@ViewBag.BookNameSort">
+                Book name
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@ViewBag.AuthorNameSort">
+                Author name
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@ViewBag.RatingSort">
+                Rating
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@ViewBag.ShortDescriptionSort">
+                Description
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@ViewBag.SectionSort">
+                Section
+            </a>
+        </th>
+    </tr>
     @foreach (var item in Model)
     {
         if (string.IsNullOrEmpty(item.ShortDescription)) item.ShortDescription = "None";
-        
+
         <tr>
             <td>@item.BookName</td>
             <td>@item.AuthorName</td>
@@ -19,7 +45,7 @@
             </td>
             <td>
                 <form asp-controller="Home" asp-action="Delete" method="Post" asp-route-id="@item.Id">
-                    <input type="submit" value="Delete"/>
+                    <input type="submit" value="Delete" />
                 </form>
             </td>
         </tr>
